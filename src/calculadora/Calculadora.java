@@ -13,7 +13,7 @@ public class Calculadora
 		
 		try 
 		{
-			FileWriter writing = new FileWriter("C:\\Historial.txt", true);
+			FileWriter writing = new FileWriter("Historial.txt", true);
 			BufferedWriter bw = new BufferedWriter(writing);
 			PrintWriter pw = new PrintWriter(bw);
 			
