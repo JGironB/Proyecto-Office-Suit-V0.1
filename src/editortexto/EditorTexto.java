@@ -1,10 +1,11 @@
 package editortexto;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.awt.*;
 
 public class EditorTexto 
 {
-
+JMenuBar barraMenu = new JMenuBar();
 	public static void main(String[] args)
 	{
 		InterfazUsuario ui = new InterfazUsuario();
@@ -12,3 +13,4 @@ public class EditorTexto
     }
 
 }
+

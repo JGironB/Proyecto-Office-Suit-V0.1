@@ -8,12 +8,14 @@ import java.awt.event.*;
 public class Lamina extends JPanel
 {
 	
-	private AreaPersonalizada area;
-	private JMenu fuentes, estilo, tamano, fuentesDisponibles;
-	private JPopupMenu myPopupMenu, popup;
-	private JToolBar bar;
+	public AreaPersonalizada area;
+	public JMenu fuentes, estilo, tamano, fuentesDisponibles;
+	public JPopupMenu myPopupMenu, popup;
+	public JToolBar bar;
 		
-	public Lamina()
+	
+        
+        public Lamina(AreaPersonalizada area)
 	{
 		fuentesDisponibles = new JMenu("Fuentes Disponibles");
 		
@@ -21,8 +23,6 @@ public class Lamina extends JPanel
 			
 		setLayout(new BorderLayout());
 		
-		area = new AreaPersonalizada();
-			
 		area.setFont(new Font("Arial", Font.PLAIN, 12));
 		
 		JPanel panelBar = new JPanel();
@@ -32,7 +32,7 @@ public class Lamina extends JPanel
 			
 		fuentes = new JMenu("Fuente");
 		estilo = new JMenu("Estilo");
-		tamano = new JMenu("Tamaño");
+		tamano = new JMenu("TamaÃ±o");
 		
 		createItems(new String[]{"10","12","14","16","18","20","22","24","26"}, tamano);
 		createItems(new String[]{"Negrita", "Cursiva", "Subrayado"}, estilo);
@@ -60,8 +60,9 @@ public class Lamina extends JPanel
 		setUpBar(new ImageIcon("src/editortexto/Centrado.png")).addActionListener(new StyledEditorKit.AlignmentAction(null, StyleConstants.ALIGN_CENTER));
 		setUpBar(new ImageIcon("src/editortexto/Derecha.png")).addActionListener(new StyledEditorKit.AlignmentAction(null, StyleConstants.ALIGN_RIGHT));
 		setUpBar(new ImageIcon("src/editortexto/Justificado.png")).addActionListener(new StyledEditorKit.AlignmentAction(null, StyleConstants.ALIGN_JUSTIFIED));
-		
-		panelBar.add(bar);
+		bar.addSeparator();
+                setUpBar(new ImageIcon("src/editortexto/Pintura.jpg"));
+                panelBar.add(bar);
 		JLabel espacioIzquierda = new JLabel("                                       ");
 		JLabel espacioDerecha = new JLabel("                                       ");
 		JLabel espacioAbajo = new JLabel("                                       ");
@@ -71,11 +72,17 @@ public class Lamina extends JPanel
 		add(espacioIzquierda, BorderLayout.WEST);
 		add(espacioDerecha, BorderLayout.EAST);
 		add(espacioAbajo, BorderLayout.SOUTH);
-	}
-	
-	private JMenu crearMenuFuentes()
+	       
+                
+        
+                pasar();
+        }
+        public AreaPersonalizada pasar(){
+        return area;
+        }	
+	public JMenu crearMenuFuentes()
 	{
-		
+		//Menu Fuentes
 		popup = new JPopupMenu();
 		
         popup.setLayout(new BorderLayout());
@@ -93,7 +100,7 @@ public class Lamina extends JPanel
         
         String[] fuentes = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         
-        JPanel panel = new JPanel(new GridLayout(342,0));
+        JPanel panel = new JPanel(new GridLayout(20,0));
         for(String i: fuentes) {
             JMenuItem item = new JMenuItem(i);
             item.addActionListener(l);
@@ -106,8 +113,8 @@ public class Lamina extends JPanel
         
         return fuentesDisponibles;
 	}
-		
-	private JButton setUpBar(ImageIcon icono)
+	//Barra Cambio Letras	
+	public JButton setUpBar(ImageIcon icono)
 	{
 		JButton button = new JButton(icono);
 		
@@ -118,7 +125,7 @@ public class Lamina extends JPanel
 		return button;
 	}
 		
-	private void createItems(String[] myString, JMenu myMenu)
+	public void createItems(String[] myString, JMenu myMenu)
 	{
 
 		for (String i : myString)
@@ -166,7 +173,7 @@ public class Lamina extends JPanel
 	}
 	
 	
-	private MouseListener menuMouseListener = new MouseAdapter() {
+	public MouseListener menuMouseListener = new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
             if(!popup.isVisible())
             	showMenu();
@@ -187,7 +194,7 @@ public class Lamina extends JPanel
        }
    };
  
-   private void showMenu() {
+   public void showMenu() {
        Rectangle r = fuentesDisponibles.getBounds();
        Point p = new Point(r.x, r.y+r.height);
        SwingUtilities.convertPointToScreen(p, fuentesDisponibles.getParent());
@@ -197,12 +204,4 @@ public class Lamina extends JPanel
 	
 }
 
-class AreaPersonalizada extends JTextPane
-{
-	
-	public boolean getScrollableTracksViewportWidth() 
-	{
-		return true;
-	}
-	
-}
+
