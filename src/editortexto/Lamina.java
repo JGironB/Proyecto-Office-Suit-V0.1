@@ -1,4 +1,4 @@
-package editortexto;
+﻿package editortexto;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -12,12 +12,12 @@ public class Lamina extends JPanel
 	public JMenu fuentes, estilo, tamano, fuentesDisponibles;
 	public JPopupMenu myPopupMenu, popup;
 	public JToolBar bar;
-		
+
 	
-        
         public Lamina(AreaPersonalizada area)
 	{
-		fuentesDisponibles = new JMenu("Fuentes Disponibles");
+            this.area= area;
+            fuentesDisponibles = new JMenu("Fuentes Disponibles");
 		
 		myPopupMenu = new JPopupMenu();
 			
@@ -61,7 +61,7 @@ public class Lamina extends JPanel
 		setUpBar(new ImageIcon("src/editortexto/Derecha.png")).addActionListener(new StyledEditorKit.AlignmentAction(null, StyleConstants.ALIGN_RIGHT));
 		setUpBar(new ImageIcon("src/editortexto/Justificado.png")).addActionListener(new StyledEditorKit.AlignmentAction(null, StyleConstants.ALIGN_JUSTIFIED));
 		bar.addSeparator();
-                setUpBar(new ImageIcon("src/editortexto/Pintura.jpg"));
+                setUpBar2(new ImageIcon("src/editortexto/Pintura.jpg"));
                 panelBar.add(bar);
 		JLabel espacioIzquierda = new JLabel("                                       ");
 		JLabel espacioDerecha = new JLabel("                                       ");
@@ -86,7 +86,7 @@ public class Lamina extends JPanel
 		popup = new JPopupMenu();
 		
         popup.setLayout(new BorderLayout());
-        popup.setPopupSize(200, 500);
+        popup.setPopupSize(100, 500);
         popup.setInvoker(fuentesDisponibles);
         
         fuentesDisponibles.addMouseListener(menuMouseListener);
@@ -100,7 +100,7 @@ public class Lamina extends JPanel
         
         String[] fuentes = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         
-        JPanel panel = new JPanel(new GridLayout(20,0));
+        JPanel panel = new JPanel(new GridLayout(342,0));
         for(String i: fuentes) {
             JMenuItem item = new JMenuItem(i);
             item.addActionListener(l);
@@ -114,16 +114,28 @@ public class Lamina extends JPanel
         return fuentesDisponibles;
 	}
 	//Barra Cambio Letras	
-	public JButton setUpBar(ImageIcon icono)
+	 public JButton setUpBar2(ImageIcon icono)
+	{
+		JButton button = new JButton(icono);
+		
+		button.setBackground(Color.WHITE);
+	button.addActionListener(new GestionarColor());
+		bar.add(button);
+	        	
+		return button;
+	    
+        }
+        public JButton setUpBar(ImageIcon icono)
 	{
 		JButton button = new JButton(icono);
 		
 		button.setBackground(Color.WHITE);
 	
 		bar.add(button);
-		
+	        	
 		return button;
-	}
+	    
+        }
 		
 	public void createItems(String[] myString, JMenu myMenu)
 	{
@@ -202,6 +214,26 @@ public class Lamina extends JPanel
        popup.setVisible(true);
   }
 	
+
+
+
+class GestionarColor implements ActionListener
+{
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            Color selectColor=Color.BLACK;
+        Color jColor = selectColor;
+
+if ((jColor = JColorChooser.showDialog(area, "Select color", jColor)) != null) {
+selectColor = jColor;
+area.setForeground(selectColor);
 }
+        }
+    
+}
+}
+
 
 
